@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen>
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100),
+        preferredSize: Size.fromHeight(90.h),
         child: Container(
           decoration: BoxDecoration(
               color: Color(0xFF18A0DA),
@@ -270,13 +270,16 @@ class _HomeScreenState extends State<HomeScreen>
                   SizedBox(
                     height: 24.h,
                   ),
-                  Text(
-                    'Quick picks for you',
-                    style: TextStyle(
-                      color: const Color(0xFF141414),
-                      fontSize: 16.sp,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w500,
+                  Padding(
+                    padding:  EdgeInsets.only(left: 5.w),
+                    child: Text(
+                      'Quick picks for you',
+                      style: TextStyle(
+                        color: const Color(0xFF141414),
+                        fontSize: 16.sp,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                   SizedBox(

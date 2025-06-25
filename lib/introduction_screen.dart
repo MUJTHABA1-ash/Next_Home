@@ -69,10 +69,13 @@ class _IntroductionPagesState extends State<IntroductionPages> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.asset("assets/splash.png", width: 88.w,
-                      height: 50.h,),
+                    Image.asset(
+                      "assets/splash.png",
+                      width: 88.w,
+                      height: 50.h,
+                    ),
                     Padding(
-                      padding: EdgeInsets.only(right: 80.w,top: 10.h),
+                      padding: EdgeInsets.only(right: 80.w, top: 10.h),
                       child: Text(
                         'Discover The Perfect \nStay At The Best Price',
                         style: TextStyle(
@@ -87,7 +90,6 @@ class _IntroductionPagesState extends State<IntroductionPages> {
                 )),
             bodyWidget: Column(
               children: [
-
                 Center(
                   child: Text(
                     'Find the ideal PG at the right price. Affordable, comfortable, and perfectly suited to your needs.',
@@ -113,34 +115,35 @@ class _IntroductionPagesState extends State<IntroductionPages> {
               padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 250.h),
               child: Image(
                   image: AssetImage(
-                    "assets/intro2.png",
-                  )),
+                "assets/intro2.png",
+              )),
             ),
             titleWidget: Title(
                 color: Colors.red,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.asset("assets/splash.png", width: 88.w,
-                      height: 50.h,),
-                    Padding(
-                      padding: EdgeInsets.only(right: 50.w,top: 10.h),
-                      child: Text(
-                        'Experience Pure Comfort \nand Pristine Cleanliness',
-                        style: TextStyle(
-                          color: const Color(0xFF141414),
-                          fontSize: 24.sp,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w600,
-                          height: 1.33.h,
-                        ),
-                      )
+                    Image.asset(
+                      "assets/splash.png",
+                      width: 88.w,
+                      height: 50.h,
                     ),
+                    Padding(
+                        padding: EdgeInsets.only(right: 50.w, top: 10.h),
+                        child: Text(
+                          'Experience Pure Comfort \nand Pristine Cleanliness',
+                          style: TextStyle(
+                            color: const Color(0xFF141414),
+                            fontSize: 24.sp,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
+                            height: 1.33.h,
+                          ),
+                        )),
                   ],
                 )),
             bodyWidget: Column(
               children: [
-
                 Center(
                   child: Text(
                     'Experience unmatched comfort and cleanliness. Every corner is designed to offer you a refreshing stay.',
@@ -166,29 +169,31 @@ class _IntroductionPagesState extends State<IntroductionPages> {
               padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 250.h),
               child: Image(
                   image: AssetImage(
-                    "assets/intro3.png",
-                  )),
+                "assets/intro3.png",
+              )),
             ),
             titleWidget: Title(
                 color: Colors.red,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.asset("assets/splash.png", width: 88.w,
-                      height: 50.h,),
-                    Padding(
-                      padding: EdgeInsets.only(right: 80.w,top: 10.h),
-                      child: Text(
-                        'Book Your Perfect PG. \nFast and Effortless.',
-                        style: TextStyle(
-                          color: const Color(0xFF141414),
-                          fontSize: 24.sp,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w600,
-                          height: 1.33.h,
-                        ),
-                      )
+                    Image.asset(
+                      "assets/splash.png",
+                      width: 88.w,
+                      height: 50.h,
                     ),
+                    Padding(
+                        padding: EdgeInsets.only(right: 80.w, top: 10.h),
+                        child: Text(
+                          'Book Your Perfect PG. \nFast and Effortless.',
+                          style: TextStyle(
+                            color: const Color(0xFF141414),
+                            fontSize: 24.sp,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
+                            height: 1.33.h,
+                          ),
+                        )),
                   ],
                 )),
             bodyWidget: Column(
@@ -224,14 +229,14 @@ class _IntroductionPagesState extends State<IntroductionPages> {
       //rtl: true, // Display as right-to-left
 
       next: Padding(
-        padding: EdgeInsets.only(right: 69.0.w,bottom: 20.h),
+        padding: EdgeInsets.only(right: 69.0.w, bottom: 20.h),
         child: Container(
           width: 150.w,
           height: 30.h,
-          decoration: ShapeDecoration( color: Colors.blue,shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.r)
-          )),
-
+          decoration: ShapeDecoration(
+              color: Colors.blue,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.r))),
           child: Center(
             child: Text(
               'Next',
@@ -251,10 +256,10 @@ class _IntroductionPagesState extends State<IntroductionPages> {
         child: Container(
           width: 150.w,
           height: 30.h,
-          decoration: ShapeDecoration(color: Colors.blue,shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.r)
-          )),
-
+          decoration: ShapeDecoration(
+              color: Colors.blue,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.r))),
           child: Center(
             child: Text(
               'Get Started',

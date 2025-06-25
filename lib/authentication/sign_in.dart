@@ -48,7 +48,7 @@ class _SignInState extends State<SignIn> {
                                     topRight: Radius.circular(20.r),
                                     topLeft: Radius.circular(20.r)))),
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 70.0),
+                          padding: const EdgeInsets.only(top: 70),
                           child: Column(
                             children: [
                               Text(
@@ -296,25 +296,6 @@ class _SignInState extends State<SignIn> {
                 SizedBox(
                   height: 10.h,
                 ),
-                // SizedBox(
-                //   width: MediaQuery.of(context).size.width,
-                //   child: TextField(
-                //     decoration: InputDecoration(
-                //         labelText: 'Select Gender',
-                //         labelStyle: TextStyle(
-                //           color: const Color(0xFFA1A1A1),
-                //           fontSize: 14.sp,
-                //           fontFamily: 'Inter',
-                //           fontWeight: FontWeight.w400,
-                //         ),
-                //         enabledBorder: OutlineInputBorder(
-                //             borderSide: BorderSide(color: Color(0xFFD9D9D9))),
-                //         border: OutlineInputBorder(
-                //             borderRadius: BorderRadius.circular(10.r))),
-                //   ),
-                // ),
-                // SizedBox(height: 30.h,width: MediaQuery.of(context).size.width,
-                // child: DropdownMenu(dropdownMenuEntries: Myitems.map((e)=>DropdownMenuEntry(value: e, label: e)).toList())),
                 DropdownButtonHideUnderline(
                     child: DropdownButton2(
                       hint: Padding(
@@ -375,7 +356,7 @@ class _SignInState extends State<SignIn> {
                     decoration: ShapeDecoration(
                       color: const Color(0xFF18A0DA),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(12.r),
                       ),
                     ),
                     child: Row(
@@ -390,7 +371,7 @@ class _SignInState extends State<SignIn> {
                             fontSize: 16.sp,
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w600,
-                            height: 1.50,
+                            height: 1.50.h,
                           ),
                         ),
                       ],
