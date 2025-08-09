@@ -1,9 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:next_home/authentication/sign_in.dart';
+import 'package:next_home/authentication/sign_up.dart';
+import 'package:next_home/screens/details_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({super.key});
+  final String name;
+  final String num;
+  HomeScreen({super.key, required this.name, required this.num});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -19,15 +25,15 @@ class _HomeScreenState extends State<HomeScreen>
     'Wayanad',
     'Idukki',
   ];
-  final List flat = ["assets/flat.png", "assets/flat2.png", "assets/flat3.jpg"];
-  final List flat2 = [
+   List<String> flat = ["assets/flat.png", "assets/flat2.png", "assets/flat3.jpg"];
+   List <String>flat2 = [
     "assets/flat3.jpg",
     "assets/flat.png",
     "assets/flat2.png"
   ];
   final List price = ["₹5000-₹12000", '₹5000', "10000"];
   final List category = ["Boys Hostel", "Girls Hostel"];
-  final List img = ["assets/man.png","assets/girl.png"];
+  final List img = ["assets/man.png", "assets/girl.png"];
   late TabController _tabController = TabController(length: 2, vsync: this);
 
   @override
@@ -37,8 +43,11 @@ class _HomeScreenState extends State<HomeScreen>
     super.initState();
   }
 
+  final auth = FirebaseAuth.instance;
+
   int currentIndex = 0;
-@override
+
+  @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
@@ -53,19 +62,25 @@ class _HomeScreenState extends State<HomeScreen>
         child: Container(
           decoration: BoxDecoration(
               color: Color(0xFF18A0DA),
-            borderRadius: BorderRadius.only(bottomRight: Radius.circular(12.r),bottomLeft: Radius.circular(12.r))
-
-
-          ),
+              borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(12.r),
+                  bottomLeft: Radius.circular(12.r))),
           child: AppBar(
             toolbarHeight: 80.h,
             backgroundColor: Colors.transparent,
             leading: Padding(
-              padding:  EdgeInsets.only(left: 20),
-              child: Builder(builder: (context) => GestureDetector(onTap: (){
-                Scaffold.of(context).openDrawer();
-              }, child: Image.asset("assets/menu.png",color: Colors.white,),),)
-            ),
+                padding: EdgeInsets.only(left: 20),
+                child: Builder(
+                  builder: (context) => GestureDetector(
+                    onTap: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                    child: Image.asset(
+                      "assets/menu.png",
+                      color: Colors.white,
+                    ),
+                  ),
+                )),
             // leading: Icon(
             //   Icons.menu,
             //   color: Colors.white,
@@ -74,9 +89,9 @@ class _HomeScreenState extends State<HomeScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Hello James,',
+                 widget.name,
                   style: TextStyle(
-                    color: Colors.white,
+                  color: Colors.white,
                     fontSize: 12.sp,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w500,
@@ -127,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen>
                           Column(
                             children: [
                               Text(
-                                'Munas',
+                                widget.name,
                                 style: TextStyle(
                                   color: const Color(0xFF141414),
                                   fontSize: 16,
@@ -137,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen>
                                 ),
                               ),
                               Text(
-                                '+91 9645013281',
+                                widget.num,
                                 style: TextStyle(
                                   color: const Color(0xFF737373),
                                   fontSize: 14.sp,
@@ -190,18 +205,27 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
                 trailing: Icon(Icons.arrow_forward_ios),
               ),
-              ListTile(
-                leading: Icon(Icons.output),
-                title: Text(
-                  'Logout',
-                  style: TextStyle(
-                    color: const Color(0xFF141414),
-                    fontSize: 14.sp,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w500,
+              GestureDetector(
+                onTap: () {
+                  auth.signOut().then(
+                        (value) => Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(builder: (context) => SignIn()),
+                            (Route<dynamic> route) => false),
+                      );
+                },
+                child: ListTile(
+                  leading: Icon(Icons.output),
+                  title: Text(
+                    'Logout',
+                    style: TextStyle(
+                      color: const Color(0xFF141414),
+                      fontSize: 14.sp,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
+                  trailing: Icon(Icons.arrow_forward_ios),
                 ),
-                trailing: Icon(Icons.arrow_forward_ios),
               ),
             ],
           ),
@@ -271,7 +295,7 @@ class _HomeScreenState extends State<HomeScreen>
                     height: 24.h,
                   ),
                   Padding(
-                    padding:  EdgeInsets.only(left: 5.w),
+                    padding: EdgeInsets.only(left: 5.w),
                     child: Text(
                       'Quick picks for you',
                       style: TextStyle(
@@ -285,7 +309,6 @@ class _HomeScreenState extends State<HomeScreen>
                   SizedBox(
                     height: 16.h,
                   ),
-
                   SizedBox(
                     height: 55.h,
                     child: ListView.builder(
@@ -293,52 +316,64 @@ class _HomeScreenState extends State<HomeScreen>
                       itemCount: category.length,
                       itemBuilder: (context, index) {
                         return GestureDetector(
-                          onTap: (){
+                          onTap: () {
                             setState(() {
-                              currentIndex=index;
+                              currentIndex = index;
                             });
                           },
                           child: Container(
                             margin: EdgeInsets.all(7),
                             width: 145.w,
                             height: 22.h,
-                            decoration: BoxDecoration(color:Colors.white,
-                            borderRadius:BorderRadius.circular(10.r),
-                            border: currentIndex==index
-                            ?Border.all(color: Colors.blueAccent,width: 1.w):Border.all(color: Colors.grey,width: 1.w)),
-                            child: Center(child:Row(
-                              children: [
-                                SizedBox(height: 40.h,width: 40.w,child: Padding(
-                                  padding: EdgeInsets.only(left: 14.w),
-                                  child: Image.asset(img[index],color: currentIndex==index
-                                      ? Colors.blue
-                                      : Colors.grey),
-                                )),
-                                SizedBox(width: 8.w,),
-                                Text(category[index],style: TextStyle(
-                                  fontSize: 14.sp,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.57.h,
-                                    color: currentIndex==index
-                                        ? Colors.blue
-                                        : Colors.grey
-                                ),
-
-                                ),
-                              ],
-                            ), ),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10.r),
+                                border: currentIndex == index
+                                    ? Border.all(
+                                        color: Colors.blueAccent, width: 1.w)
+                                    : Border.all(
+                                        color: Colors.grey, width: 1.w)),
+                            child: Center(
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                      height: 40.h,
+                                      width: 40.w,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(left: 14.w),
+                                        child: Image.asset(img[index],
+                                            color: currentIndex == index
+                                                ? Colors.blue
+                                                : Colors.grey),
+                                      )),
+                                  SizedBox(
+                                    width: 8.w,
+                                  ),
+                                  Text(
+                                    category[index],
+                                    style: TextStyle(
+                                        fontSize: 14.sp,
+                                        fontFamily: 'Inter',
+                                        fontWeight: FontWeight.w400,
+                                        height: 1.57.h,
+                                        color: currentIndex == index
+                                            ? Colors.blue
+                                            : Colors.grey),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         );
                       },
                     ),
                   ),
-              SizedBox(
-                height: 10.h,
-              ),
-                  if(currentIndex==0)
-              SizedBox(
-                height: 357.h,
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  if (currentIndex == 0)
+                    SizedBox(
+                      height: 357.h,
                       child: ListView.builder(
                         physics: AlwaysScrollableScrollPhysics(),
                         itemCount: flat.length,
@@ -349,163 +384,165 @@ class _HomeScreenState extends State<HomeScreen>
                             children: [
                               Card(
                                 shadowColor: Colors.transparent,
-                                child: Container(
-                                  width: 327.w,
-                                  height: 262.h,
-                                  decoration: ShapeDecoration(
-                                    color:   Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8.r)),
-                                  ),
-                                  child: SizedBox(
-                                    width: 100.w,
-                                    height: 100.h,
-                                    child: Column(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius: BorderRadius.circular(10.r) ,
-                                          child: Image.asset(
-                                            flat[index],
-                                            width: 327.w,
-                                            height: 180.h,
-                                            fit: BoxFit.fitHeight,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                            builder: (_) => DetailsScreen(
+                                                   images: flat, selectedIndex: index,
+                                                )));
+                                  },
+                                  child: Container(
+                                    width: 327.w,
+                                    height: 262.h,
+                                    decoration: ShapeDecoration(
+                                      color: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8.r)),
+                                    ),
+                                    child: SizedBox(
+                                      width: 100.w,
+                                      height: 100.h,
+                                      child: Column(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10.r),
+                                            child: Image.asset(
+                                              flat[index],
+                                              width: 327.w,
+                                              height: 180.h,
+                                              fit: BoxFit.fitHeight,
+                                            ),
                                           ),
-                                        ),
-                                        SizedBox(
-                                          height: 5.h,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'Executive Stay PG',
-                                              style: TextStyle(
-                                                color: const Color(
-                                                    0xFF141414),
-                                                fontSize: 14.sp,
-                                                fontFamily: 'Inter',
-                                                fontWeight:
-                                                    FontWeight.w500,
+                                          SizedBox(
+                                            height: 5.h,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'Executive Stay PG',
+                                                style: TextStyle(
+                                                  color:
+                                                      const Color(0xFF141414),
+                                                  fontSize: 14.sp,
+                                                  fontFamily: 'Inter',
+                                                  fontWeight: FontWeight.w500,
+                                                ),
                                               ),
-                                            ),
-                                            Spacer(),
-                                            Text(
-                                              price[index],
-                                              textAlign: TextAlign.right,
-                                              style: TextStyle(
-                                                color: const Color(
-                                                    0xFF18A0DA),
-                                                fontSize: 16.sp,
-                                                fontFamily: 'Inter',
-                                                fontWeight:
-                                                    FontWeight.w600,
+                                              Spacer(),
+                                              Text(
+                                                price[index],
+                                                textAlign: TextAlign.right,
+                                                style: TextStyle(
+                                                  color:
+                                                      const Color(0xFF18A0DA),
+                                                  fontSize: 16.sp,
+                                                  fontFamily: 'Inter',
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 4.h,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'Kottakkal, Kerala',
+                                                style: TextStyle(
+                                                  color:
+                                                      const Color(0xFF737373),
+                                                  fontSize: 12.sp,
+                                                  fontFamily: 'Inter',
+                                                  fontWeight: FontWeight.w400,
+                                                ),
                                               ),
-                                            )
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 4.h,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'Kottakkal, Kerala',
-                                              style: TextStyle(
-                                                color: const Color(
-                                                    0xFF737373),
-                                                fontSize: 12.sp,
-                                                fontFamily: 'Inter',
-                                                fontWeight:
-                                                    FontWeight.w400,
+                                              Spacer(),
+                                              Text(
+                                                'per month',
+                                                textAlign: TextAlign.right,
+                                                style: TextStyle(
+                                                  color:
+                                                      const Color(0xFF737373),
+                                                  fontSize: 12.sp,
+                                                  fontFamily: 'Inter',
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 4.h,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                FontAwesomeIcons.wifi,
+                                                size: 15.sp,
+                                                color: Color(0xFF737373),
                                               ),
-                                            ),
-                                            Spacer(),
-                                            Text(
-                                              'per month',
-                                              textAlign: TextAlign.right,
-                                              style: TextStyle(
-                                                color: const Color(
-                                                    0xFF737373),
-                                                fontSize: 12.sp,
-                                                fontFamily: 'Inter',
-                                                fontWeight:
-                                                    FontWeight.w400,
+                                              SizedBox(
+                                                width: 7.w,
                                               ),
-                                            )
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 4.h,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              FontAwesomeIcons.wifi,
-                                              size: 15.sp,
-                                              color: Color(0xFF737373),
-                                            ),
-                                            SizedBox(
-                                              width: 7.w,
-                                            ),
-                                            Text(
-                                              'Wifi Services',
-                                              style: TextStyle(
-                                                color: const Color(
-                                                    0xFF737373),
-                                                fontSize: 12.sp,
-                                                fontFamily: 'Inter',
-                                                fontWeight:
-                                                    FontWeight.w400,
+                                              Text(
+                                                'Wifi Services',
+                                                style: TextStyle(
+                                                  color:
+                                                      const Color(0xFF737373),
+                                                  fontSize: 12.sp,
+                                                  fontFamily: 'Inter',
+                                                  fontWeight: FontWeight.w400,
+                                                ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              width: 18.w,
-                                            ),
-                                            Icon(
-                                              FontAwesomeIcons.dumbbell,
-                                              size: 15.sp,
-                                              color: Color(0xFF737373),
-                                            ),
-                                            SizedBox(
-                                              width: 7.w,
-                                            ),
-                                            Text(
-                                              'Gym',
-                                              style: TextStyle(
-                                                color: const Color(
-                                                    0xFF737373),
-                                                fontSize: 12.sp,
-                                                fontFamily: 'Inter',
-                                                fontWeight:
-                                                    FontWeight.w400,
+                                              SizedBox(
+                                                width: 18.w,
                                               ),
-                                            ),
-                                            SizedBox(
-                                              width: 18.w,
-                                            ),
-                                            Icon(
-                                              FontAwesomeIcons
-                                                  .personBiking,
-                                              size: 15.sp,
-                                              color: Color(0xFF737373),
-                                            ),
-                                            SizedBox(
-                                              width: 7.w,
-                                            ),
-                                            Text(
-                                              'Parking',
-                                              style: TextStyle(
-                                                color: const Color(
-                                                    0xFF737373),
-                                                fontSize: 12.sp,
-                                                fontFamily: 'Inter',
-                                                fontWeight:
-                                                    FontWeight.w400,
+                                              Icon(
+                                                FontAwesomeIcons.dumbbell,
+                                                size: 15.sp,
+                                                color: Color(0xFF737373),
                                               ),
-                                            )
-                                          ],
-                                        )
-                                      ],
+                                              SizedBox(
+                                                width: 7.w,
+                                              ),
+                                              Text(
+                                                'Gym',
+                                                style: TextStyle(
+                                                  color:
+                                                      const Color(0xFF737373),
+                                                  fontSize: 12.sp,
+                                                  fontFamily: 'Inter',
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 18.w,
+                                              ),
+                                              Icon(
+                                                FontAwesomeIcons.personBiking,
+                                                size: 15.sp,
+                                                color: Color(0xFF737373),
+                                              ),
+                                              SizedBox(
+                                                width: 7.w,
+                                              ),
+                                              Text(
+                                                'Parking',
+                                                style: TextStyle(
+                                                  color:
+                                                      const Color(0xFF737373),
+                                                  fontSize: 12.sp,
+                                                  fontFamily: 'Inter',
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -515,7 +552,7 @@ class _HomeScreenState extends State<HomeScreen>
                         },
                       ),
                     ),
-                  if(currentIndex==1)
+                  if (currentIndex == 1)
                     SizedBox(
                       height: 357.h,
                       child: ListView.builder(
@@ -528,163 +565,164 @@ class _HomeScreenState extends State<HomeScreen>
                             children: [
                               Card(
                                 shadowColor: Colors.transparent,
-                                child: Container(
-                                  width: 327.w,
-                                  height: 262.h,
-                                  decoration: ShapeDecoration(
-                                    color:   Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                        BorderRadius.circular(8.r)),
-                                  ),
-                                  child: SizedBox(
-                                    width: 100.w,
-                                    height: 100.h,
-                                    child: Column(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius: BorderRadius.circular(10.r) ,
-                                          child: Image.asset(
-                                            flat2[index],
-                                            width: 327.w,
-                                            height: 180.h,
-                                            fit: BoxFit.fitHeight,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (_) => DetailsScreen(
+                                                 images: flat2, selectedIndex: index,)));
+                                  },
+                                  child: Container(
+                                    width: 327.w,
+                                    height: 262.h,
+                                    decoration: ShapeDecoration(
+                                      color: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8.r)),
+                                    ),
+                                    child: SizedBox(
+                                      width: 100.w,
+                                      height: 100.h,
+                                      child: Column(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10.r),
+                                            child: Image.asset(
+                                              flat2[index],
+                                              width: 327.w,
+                                              height: 180.h,
+                                              fit: BoxFit.fitHeight,
+                                            ),
                                           ),
-                                        ),
-                                        SizedBox(
-                                          height: 5.h,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'Executive Stay PG',
-                                              style: TextStyle(
-                                                color: const Color(
-                                                    0xFF141414),
-                                                fontSize: 14.sp,
-                                                fontFamily: 'Inter',
-                                                fontWeight:
-                                                FontWeight.w500,
+                                          SizedBox(
+                                            height: 5.h,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'Executive Stay PG',
+                                                style: TextStyle(
+                                                  color:
+                                                      const Color(0xFF141414),
+                                                  fontSize: 14.sp,
+                                                  fontFamily: 'Inter',
+                                                  fontWeight: FontWeight.w500,
+                                                ),
                                               ),
-                                            ),
-                                            Spacer(),
-                                            Text(
-                                              price[index],
-                                              textAlign: TextAlign.right,
-                                              style: TextStyle(
-                                                color: const Color(
-                                                    0xFF18A0DA),
-                                                fontSize: 16.sp,
-                                                fontFamily: 'Inter',
-                                                fontWeight:
-                                                FontWeight.w600,
+                                              Spacer(),
+                                              Text(
+                                                price[index],
+                                                textAlign: TextAlign.right,
+                                                style: TextStyle(
+                                                  color:
+                                                      const Color(0xFF18A0DA),
+                                                  fontSize: 16.sp,
+                                                  fontFamily: 'Inter',
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 4.h,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'Kottakkal, Kerala',
+                                                style: TextStyle(
+                                                  color:
+                                                      const Color(0xFF737373),
+                                                  fontSize: 12.sp,
+                                                  fontFamily: 'Inter',
+                                                  fontWeight: FontWeight.w400,
+                                                ),
                                               ),
-                                            )
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 4.h,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'Kottakkal, Kerala',
-                                              style: TextStyle(
-                                                color: const Color(
-                                                    0xFF737373),
-                                                fontSize: 12.sp,
-                                                fontFamily: 'Inter',
-                                                fontWeight:
-                                                FontWeight.w400,
+                                              Spacer(),
+                                              Text(
+                                                'per month',
+                                                textAlign: TextAlign.right,
+                                                style: TextStyle(
+                                                  color:
+                                                      const Color(0xFF737373),
+                                                  fontSize: 12.sp,
+                                                  fontFamily: 'Inter',
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 4.h,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                FontAwesomeIcons.wifi,
+                                                size: 15.sp,
+                                                color: Color(0xFF737373),
                                               ),
-                                            ),
-                                            Spacer(),
-                                            Text(
-                                              'per month',
-                                              textAlign: TextAlign.right,
-                                              style: TextStyle(
-                                                color: const Color(
-                                                    0xFF737373),
-                                                fontSize: 12.sp,
-                                                fontFamily: 'Inter',
-                                                fontWeight:
-                                                FontWeight.w400,
+                                              SizedBox(
+                                                width: 7.w,
                                               ),
-                                            )
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 4.h,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              FontAwesomeIcons.wifi,
-                                              size: 15.sp,
-                                              color: Color(0xFF737373),
-                                            ),
-                                            SizedBox(
-                                              width: 7.w,
-                                            ),
-                                            Text(
-                                              'Wifi Services',
-                                              style: TextStyle(
-                                                color: const Color(
-                                                    0xFF737373),
-                                                fontSize: 12.sp,
-                                                fontFamily: 'Inter',
-                                                fontWeight:
-                                                FontWeight.w400,
+                                              Text(
+                                                'Wifi Services',
+                                                style: TextStyle(
+                                                  color:
+                                                      const Color(0xFF737373),
+                                                  fontSize: 12.sp,
+                                                  fontFamily: 'Inter',
+                                                  fontWeight: FontWeight.w400,
+                                                ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              width: 18.w,
-                                            ),
-                                            Icon(
-                                              FontAwesomeIcons.dumbbell,
-                                              size: 15.sp,
-                                              color: Color(0xFF737373),
-                                            ),
-                                            SizedBox(
-                                              width: 7.w,
-                                            ),
-                                            Text(
-                                              'Gym',
-                                              style: TextStyle(
-                                                color: const Color(
-                                                    0xFF737373),
-                                                fontSize: 12.sp,
-                                                fontFamily: 'Inter',
-                                                fontWeight:
-                                                FontWeight.w400,
+                                              SizedBox(
+                                                width: 18.w,
                                               ),
-                                            ),
-                                            SizedBox(
-                                              width: 18.w,
-                                            ),
-                                            Icon(
-                                              FontAwesomeIcons
-                                                  .personBiking,
-                                              size: 15.sp,
-                                              color: Color(0xFF737373),
-                                            ),
-                                            SizedBox(
-                                              width: 7.w,
-                                            ),
-                                            Text(
-                                              'Parking',
-                                              style: TextStyle(
-                                                color: const Color(
-                                                    0xFF737373),
-                                                fontSize: 12.sp,
-                                                fontFamily: 'Inter',
-                                                fontWeight:
-                                                FontWeight.w400,
+                                              Icon(
+                                                FontAwesomeIcons.dumbbell,
+                                                size: 15.sp,
+                                                color: Color(0xFF737373),
                                               ),
-                                            )
-                                          ],
-                                        )
-                                      ],
+                                              SizedBox(
+                                                width: 7.w,
+                                              ),
+                                              Text(
+                                                'Gym',
+                                                style: TextStyle(
+                                                  color:
+                                                      const Color(0xFF737373),
+                                                  fontSize: 12.sp,
+                                                  fontFamily: 'Inter',
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 18.w,
+                                              ),
+                                              Icon(
+                                                FontAwesomeIcons.personBiking,
+                                                size: 15.sp,
+                                                color: Color(0xFF737373),
+                                              ),
+                                              SizedBox(
+                                                width: 7.w,
+                                              ),
+                                              Text(
+                                                'Parking',
+                                                style: TextStyle(
+                                                  color:
+                                                      const Color(0xFF737373),
+                                                  fontSize: 12.sp,
+                                                  fontFamily: 'Inter',
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),

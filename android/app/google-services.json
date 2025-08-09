@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "639506914253",
+    "project_id": "nexthome-b575f",
+    "storage_bucket": "nexthome-b575f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:639506914253:android:475aaf77af5c780aac0284",
+        "android_client_info": {
+          "package_name": "com.example.next_home"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrlv47ysnfr2b-vGa6txfFP2Bi5JEoge4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

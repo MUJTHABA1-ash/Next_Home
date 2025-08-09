@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:next_home/authentication/sign_in.dart';
+import 'package:next_home/authentication/sign_up.dart';
 
 class IntroductionPages extends StatefulWidget {
   const IntroductionPages({super.key});
@@ -17,7 +18,7 @@ class _IntroductionPagesState extends State<IntroductionPages> {
 
   void _onIntroEnd(context) {
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => SignIn()),
+      MaterialPageRoute(builder: (_) => SignUp()),
     );
   }
 
